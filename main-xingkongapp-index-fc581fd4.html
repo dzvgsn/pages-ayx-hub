@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空体育APP · 信息卡片页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f3f5f8;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e2a3a;
+            line-height: 1.6;
+            padding: 2rem 1.2rem;
+        }
+
+        .page-container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        /* ---------- hero 主视觉卡片 ---------- */
+        .hero-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f9fafc 100%);
+            border-radius: 28px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 2.8rem 2rem;
+            margin-bottom: 2.4rem;
+            border: 1px solid rgba(200, 210, 224, 0.4);
+            text-align: center;
+        }
+
+        .hero-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #e9edf4;
+            border-radius: 18px;
+            margin-bottom: 1.2rem;
+            color: #2d4059;
+            font-size: 2rem;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        .hero-card h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #16212e;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-card p {
+            max-width: 620px;
+            margin: 0.2rem auto 0;
+            color: #4a5a6e;
+            font-size: 1.05rem;
+        }
+
+        .hero-divider {
+            width: 48px;
+            height: 3px;
+            background: #cbd5e1;
+            border-radius: 12px;
+            margin: 1.4rem auto 1rem;
+        }
+
+        /* ---------- 通用卡片 ---------- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.8rem;
+            margin-bottom: 2.2rem;
+        }
+
+        @media (min-width: 600px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 1.8rem 1.6rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(200, 210, 224, 0.25);
+            transition: box-shadow 0.15s ease;
+            border: none;
+        }
+
+        .info-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04), 0 0 0 1px #b9c7da;
+        }
+
+        .info-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card h3 span {
+            background: #eef1f6;
+            width: 32px;
+            height: 32px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .info-card p, .info-card ul {
+            font-size: 0.95rem;
+            color: #2f3f52;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-card li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .info-card li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #6f7f94;
+            font-weight: bold;
+        }
+
+        /* ---------- 自然链接段落卡片 ---------- */
+        .link-section {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(200, 210, 224, 0.25);
+            margin-bottom: 2.2rem;
+        }
+
+        .link-section h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #1a2635;
+        }
+
+        .link-section p {
+            font-size: 0.98rem;
+            color: #2f4055;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-section a {
+            color: #1f4b8c;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s;
+        }
+
+        .link-section a:hover {
+            border-bottom-color: #1f4b8c;
+        }
+
+        /* ---------- FAQ 摘要 ---------- */
+        .faq-mini {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 1.8rem 1.8rem 1.6rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(200, 210, 224, 0.25);
+            margin-bottom: 2rem;
+        }
+
+        .faq-mini h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a2635;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e6eaf0;
+            padding: 0.7rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #1e2a3a;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-a {
+            font-size: 0.9rem;
+            color: #4c5d72;
+        }
+
+        /* ---------- 底部 ---------- */
+        .footer-note {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #6b7c90;
+            padding: 1.2rem 0 0.2rem;
+            border-top: 1px solid #dde2ea;
+            margin-top: 0.6rem;
+        }
+
+        .footer-note a {
+            color: #1f4b8c;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 480px) {
+            .hero-card {
+                padding: 2rem 1.2rem;
+            }
+            .hero-card h1 {
+                font-size: 1.5rem;
+            }
+            .link-section, .faq-mini {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <!-- hero 主视觉卡片 -->
+    <div class="hero-card">
+        <div class="hero-icon">✦</div>
+        <h1>星空体育APP · 信息卡片</h1>
+        <div class="hero-divider"></div>
+        <p>稳定入口与页面说明 · 清晰分类，方便你快速了解服务框架</p>
+    </div>
+
+    <!-- 用途卡片 · 三列 (响应式变化) -->
+    <div class="card-grid">
+        <div class="info-card">
+            <h3><span>📋</span> 核心用途</h3>
+            <ul>
+                <li>赛事信息聚合与实时动态</li>
+                <li>多维度数据浏览频道</li>
+                <li>个人关注与偏好记录</li>
+                <li>内容更新提醒设置</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3><span>👥</span> 适合人群</h3>
+            <ul>
+                <li>喜爱体育资讯的日常浏览者</li>
+                <li>关注联赛、杯赛及专项运动数据的用户</li>
+                <li>希望在一处查看多种体育内容的爱好者</li>
+                <li>对稳定信息入口有需求的访问者</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3><span>⚙️</span> 页面特点</h3>
+            <ul>
+                <li>分区卡片式布局，结构清晰</li>
+                <li>浅灰背景 + 柔和阴影，阅读舒适</li>
+                <li>细边框区分模块，响应适配手机与桌面</li>
+                <li>内容平实，无夸大描述</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 自然链接段落卡片 -->
+    <div class="link-section">
+        <h2>关于稳定入口与页面说明</h2>
+        <p>如果你正在寻找一个信息组织相对清晰的体育内容聚合页面，<a href="https://main-xingkongapp.com">星空体育APP</a> 提供了按用途与人群分类的卡片式引导。页面本身不包含交互式应用，仅作为介绍与索引用途。</p>
+        <p>该站点目前以静态说明为主，方便访问者快速了解服务范围与适用场景。所有卡片内容均经过整理，不包含诱导性描述或未经验证的功能承诺。</p>
+        <p>你可以将 <a href="https://main-xingkongapp.com">星空体育APP</a> 视为一个信息参考页，用于判断该服务是否与你的需求相匹配。</p>
+    </div>
+
+    <!-- FAQ 摘要卡片 -->
+    <div class="faq-mini">
+        <h2>常见疑问摘要</h2>
+        <div class="faq-item">
+            <div class="faq-q">这个页面是官方应用吗？</div>
+            <div class="faq-a">本页为介绍与说明页，并非应用本身。具体功能请参考服务提供方发布的信息。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">如何判断内容是否适合自己？</div>
+            <div class="faq-a">请根据上方「适合人群」与「核心用途」卡片中的条目对照自身兴趣，再做进一步了解。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">页面中的链接指向哪里？</div>
+            <div class="faq-a">页面内包含指向 <a href="https://main-xingkongapp.com" style="border-bottom:1px dotted #6f7f94; font-weight:400;">星空体育APP</a> 的自然链接，访问后你可以查看更多内容。</div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-note">
+        <span>信息卡片式说明 · 内容整理于公开资料 · 无诱导性表述</span><br>
+        <span style="display:inline-block; margin-top:6px;">参考链接：<a href="https://main-xingkongapp.com">星空体育APP</a></span>
+    </div>
+
+</div>
+</body>
+</html>
